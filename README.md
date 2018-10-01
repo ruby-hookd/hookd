@@ -33,43 +33,43 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 ## Architect
 
 ```
-                                                                       +------------+
-                                                                       |            |
-                   Registers                                           |            |
-    +------+    Webhook Callback    +-------------------+              |  Observer  |
-    | User |+---------------------->|  Rack Application +-------------->   Store    |
-    +--+---+                        +-------------------+              |            |
-       ^                                                               |            |
-       |                                                               |            |
-       |                                                               +---+----+---+
-       |                                                                   |    ^
-       |                                                                   |    |
-       |                                  +--------------------------------+    |
-       |                                  |                                     |
-       |                                  |                 Pull subscribers    |
- Delivery Webhook                         |         +---------------------------+
-Notification Event                        v         |
-  To Registered                     +-----+---------+---+               +-----------------------+
- Webhook Address                    |   Notification    | <-----------+ |Hookd::Webhook.notify()|
-       |                            |      Manager      |               +-----------------------+
-       |                            +---------+---------+
+                                                                      +------------+
+                                                                      |            |
+                   Registers                                          |            |
+    +------+    Webhook Callback    +------------------+              |  Observer  |
+    | User |+---------------------->| Webhooks Manager +-------------->   Store    |
+    +--+---+                        +------------------+              |            |
+       ^                                                              |            |
+       |                                                              |            |
+       |                                                              +---+----+---+
+       |                                                                  |    ^
+       |                                                                  |    |
+       |                                  +-------------------------------+    |
+       |                                  |                                    |
+       |                                  |                Pull subscribers    |
+ Delivery Webhook                         |        +---------------------------+
+Notification Event                        v        |
+  To Registered                     +-----+--------+---+               +-----------------------+
+ Webhook Address                    |   Notification   | <-----------+ |Hookd::Webhook.notify()|
+       |                            |    Dispatcher    |               +-----------------------+
+       |                            +---------+--------+
        |                                      |
        |                                Queue Workers
        |                                      v
-       |                            +---------+---------+
-       +----------------------------+   Notification    |
-                                    |      Worker       |
-                                    +-------------------+
+       |                            +---------+--------+
+       +----------------------------+   Notification   |
+                                    |      Worker      |
+                                    +------------------+
 
 ```
 
 
 ```hookd``` is framework agnostic using adapters to connect to all external resources allowing developers to utilize their preferred or existing infrastructure. Hookd requires the following components to work:
  
- * Rack application - expose webhook registration/management endpoints
+ * Webhook Manager - provides ability to register/manage webhooks; typically a Rack application to allow registration/management from HTTP REST endpoints
  * Observer Store - ORM to store the registered observers
- * Notification Manager - handles queuing the workers; for systems with a large amount of subscribed observers, this must also be done asyncronously
- * Notification Worker - worker to send out notifications to observers; for events with a large amount of subscribed observers, this is best pushed into a asynchronous background job queue such as sidekiq or aws sqs/lambda.
+ * Notification Dispatcher- handles queuing the workers; for systems with a large amount of subscribed observers, this must also be done asyncronously
+ * Notification Worker - worker to send out notifications to observers; for events with a large amount of subscribed observers, this is best pushed into an asynchronous background job queue such as sidekiq or aws sqs/lambda.
 
 ### Webhook Definition
 
@@ -87,13 +87,21 @@ Callbacks will exist for libraries to extend functionality of the webhook.
 
 ## Roadmap
 
+### 0.1.0 Release
+
  * Implement hookd skeleton; create adapters for all resources; Implement middleware callback hooks
  * Implement adapter: hookd-store-activerecord
- * Implement adapter: hookd-worker-sidekiq
+ * Implement adapter: hookd-dispatcher-inline
+ * Implement adapter: hookd-worker-inline
  * Implement adapter: hookd-manager-grape
  * Implement adapter: hookd-manager-grape-ui (ui built off of grape endpoints)
  * Implement middleware: hookd-middleware-hmac-sig - sign all messages with hmac signature
  * Implement rails engine: hookd-rails (combines all the default adapters into 1 easy to add rails library) 
+
+### 1.0.0 Release
+
+ * Implement adapter: hookd-worker-sidekiq
+ * Implement adapter: hookd-dispatcher-sidekiq
 
 
 ## Contributors Welcome
