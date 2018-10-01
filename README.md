@@ -89,19 +89,19 @@ Callbacks will exist for libraries to extend functionality of the webhook.
 
 ### 0.1.0 Release
 
- * Implement hookd skeleton; create adapters for all resources; Implement middleware callback hooks
- * Implement adapter: hookd-store-activerecord
- * Implement adapter: hookd-dispatcher-inline
- * Implement adapter: hookd-worker-inline
- * Implement adapter: hookd-manager-grape
- * Implement adapter: hookd-manager-grape-ui (ui built off of grape endpoints)
- * Implement middleware: hookd-middleware-hmac-sig - sign all messages with hmac signature
- * Implement rails engine: hookd-rails (combines all the default adapters into 1 easy to add rails library) 
+ * - [ ] Implement hookd skeleton; create adapters for all resources; Implement middleware callback hooks
+ * - [ ] Implement adapter: hookd-store-activerecord
+ * - [ ] Implement adapter: hookd-dispatcher-inline
+ * - [ ] Implement adapter: hookd-worker-inline
+ * - [ ] Implement adapter: hookd-manager-grape
+ * - [ ] Implement adapter: hookd-manager-grape-ui (ui built off of grape endpoints)
+ * - [ ] Implement middleware: hookd-middleware-hmac-sig - sign all messages with hmac signature
+ * - [ ] Implement rails engine: hookd-rails (combines all the default adapters into 1 easy to add rails library) 
 
 ### 1.0.0 Release
 
- * Implement adapter: hookd-worker-sidekiq
- * Implement adapter: hookd-dispatcher-sidekiq
+ * - [ ] Implement adapter: hookd-worker-sidekiq
+ * - [ ] Implement adapter: hookd-dispatcher-sidekiq
 
 
 ## Contributors Welcome
@@ -114,7 +114,7 @@ MIT License. See [LICENSE.txt](LICENSE.txt) for details.
 
 ## Code of Conduct
 
-Everyone interacting in the Hookd project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/hookd/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the Hookd project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/ruby-hookd/hookd/blob/master/CODE_OF_CONDUCT.md).
 
 ## Philisophical / Technical Note
 
